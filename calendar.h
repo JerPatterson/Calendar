@@ -21,7 +21,7 @@ public:
 	Date() = default;
 	Date(int, Months, int);
 
-	friend std::ostream& operator<<(std::ostream& o, const Date& date);
+	friend std::ostream& operator<<(std::ostream&, const Date&);
 	void dateAbreviation() const;
 	void americanDateAbreviation() const;
 
@@ -41,8 +41,23 @@ public:
 
 private:
 	Months name_ = Months::UNDEFINED;
-	int year_ = -999999999;
+	int year_;
 	int nbOfDays_ = 0;
 
 	void setNbOfDays();
+};
+
+
+class Year {
+public:
+	Year() = default;
+	Year(int);
+
+private:
+	int number_ = -999999999;
+	bool isLeap_ = false;
+	int nbOfDays_ = 0;
+
+	void setNbOfDays();
+	void setLeapYearStatus();
 };
