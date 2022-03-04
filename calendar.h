@@ -16,6 +16,40 @@ enum class Months {
 };
 
 
+class Year {
+public:
+	Year() = default;
+	Year(int);
+
+	friend class Month;
+
+	friend std::ostream& operator<<(std::ostream&, const Year&);
+
+private:
+	int number_ = 2022;
+	bool isLeap_ = false;
+	int nbOfDays_ = 365;
+
+	void setNbOfDays();
+	void setLeapYearStatus();
+};
+
+
+class Month {
+public:
+	Month() = default;
+	Month(const Months&, int);
+	Month(const std::string&, int);
+
+private:
+	Months name_ = Months::UNDEFINED;
+	Year year_;
+	int nbOfDays_ = 0;
+
+	void setNbOfDays();
+};
+
+
 class Date {
 public:
 	Date() = default;
@@ -27,39 +61,7 @@ public:
 
 private:
 	int number_ = 4;
-	Months month_ = Months::MARCH;
-	int year_ = 2022;
-	DaysOfWeek dayOfWeek_ = DaysOfWeek::FRIDAY;
-};
-
-
-class Month {
-public:
-	Month() = default;
-	Month(const Months&, int);
-	Month(const string&, int);
-
-private:
-	Months name_ = Months::UNDEFINED;
 	Year year_;
-	int nbOfDays_ = 0;
-
-	void setNbOfDays();
-};
-
-
-class Year {
-public:
-	Year() = default;
-	Year(int);
-
-	friend class Month;
-
-private:
-	int number_ = -999999999;
-	bool isLeap_ = false;
-	int nbOfDays_ = 0;
-
-	void setNbOfDays();
-	void setLeapYearStatus();
+	Months month_ = Months::MARCH;
+	DaysOfWeek dayOfWeek_ = DaysOfWeek::FRIDAY;
 };

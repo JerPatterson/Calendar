@@ -3,9 +3,8 @@
 using namespace std;
 
 
-Year::Year(int number) :
-	number_(number)
-{
+Year::Year(int number) {
+	number_ = number;
 	setLeapYearStatus();
 	setNbOfDays();
 }
@@ -27,4 +26,9 @@ void Year::setLeapYearStatus() {
 void Year::setNbOfDays() {
 	if (isLeap_) nbOfDays_ = 366;
 	else nbOfDays_ = 365;
+}
+
+
+ostream& operator<<(ostream& o, const Year& year) {
+	return o << year.number_;
 }

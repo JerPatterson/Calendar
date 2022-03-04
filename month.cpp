@@ -10,17 +10,15 @@ static const map<string, unsigned> MONTHS_IN_NUM =
 	{"November"s, 11}, {"December"s, 12} };
 
 
-Month::Month(const Months& month, int year) :
-	name_(month),
-	year_(Year(year))
-{
+Month::Month(const Months& month, int year) {
+	name_ = month;
+	year_ = Year(year);
 	setNbOfDays();
 }
 
-Month::Month(const string& name, int year) :
-	name_(static_cast<Months>(MONTHS_IN_NUM.at(name))),
-	year_(Year(year))
-{
+Month::Month(const string& name, int year) {
+	name_ = static_cast<Months>(MONTHS_IN_NUM.at(name));
+	year_ = Year(year);
 	setNbOfDays();
 }
 
