@@ -8,6 +8,7 @@ int main() {
 	Date today;
 
 	cout << today;
+	today.americanDateAbreviation();
 
 	return 0;
 }

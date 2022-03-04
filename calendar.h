@@ -22,6 +22,7 @@ public:
 	Date(int, Months, int);
 
 	friend std::ostream& operator<<(std::ostream& o, const Date& date);
+	void americanDateAbreviation() const;
 
 private:
 	int number_ = 4;
