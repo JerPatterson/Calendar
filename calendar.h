@@ -31,3 +31,18 @@ private:
 	int year_ = 2022;
 	DaysOfWeek dayOfWeek_ = DaysOfWeek::FRIDAY;
 };
+
+
+class Month {
+public:
+	Month() = default;
+	Month(const Months&, int);
+	Month(const string&, int);
+
+private:
+	Months name_ = Months::UNDEFINED;
+	int year_ = -999999999;
+	int nbOfDays_ = 0;
+
+	void setNbOfDays();
+};
