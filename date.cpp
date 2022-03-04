@@ -33,9 +33,21 @@ ostream& operator<<(ostream& o, const Date& date) {
 }
 
 void Date::dateAbreviation() const {
-	cout << number_ << '/' << static_cast<int>(month_) << '/' << year_ << endl;
+	if (number_ < 10) cout << 0;
+	cout << number_ << '/';
+	
+	if (static_cast<int>(month_) < 10) cout << 0;
+	cout << static_cast<int>(month_) << '/';
+	
+	cout << year_ << endl;
 }
 
 void Date::americanDateAbreviation() const {
-	cout << static_cast<int>(month_) << '/' << number_ << '/' << year_ << endl;
+	if (static_cast<int>(month_) < 10) cout << 0;
+	cout << static_cast<int>(month_) << '/';
+
+	if (number_ < 10) cout << 0;
+	cout << number_ << '/';
+
+	cout << year_ << endl;
 }
