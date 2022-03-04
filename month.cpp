@@ -12,40 +12,22 @@ static const map<string, unsigned> MONTHS_IN_NUM =
 
 Month::Month(const Months& month, int year) :
 	name_(month),
-	year_(year)
+	year_(Year(year))
 {
 	setNbOfDays();
 }
 
 Month::Month(const string& name, int year) :
 	name_(static_cast<Months>(MONTHS_IN_NUM.at(name))),
-	year_(year)
+	year_(Year(year))
 {
 	setNbOfDays();
 }
 
 
-// TODO move in a class year later
-bool isLeapYear(int number_) {
-	bool isLeap;
-	// A year is leap if it's divisable by 400
-	if (number_ % 400 == 0)
-		isLeap = true;
-
-	// A year is leap if it's not divisable by 100 but divisable by 4
-	else if (number_ % 100 != 0 && number_ % 4 == 0)
-		isLeap = true;
-
-	else
-		isLeap = false;
-
-	return isLeap;
-}
-
-
 void Month::setNbOfDays() {
 	if (name_ == Months::FEBUARY) {
-		if (isLeapYear(year_)) nbOfDays_ = 29;
+		if (year_.isLeap_) nbOfDays_ = 29;
 		else nbOfDays_ = 28;
 	}
 

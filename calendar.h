@@ -41,7 +41,7 @@ public:
 
 private:
 	Months name_ = Months::UNDEFINED;
-	int year_;
+	Year year_;
 	int nbOfDays_ = 0;
 
 	void setNbOfDays();
@@ -52,6 +52,8 @@ class Year {
 public:
 	Year() = default;
 	Year(int);
+
+	friend class Month;
 
 private:
 	int number_ = -999999999;
