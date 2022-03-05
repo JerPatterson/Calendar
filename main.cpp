@@ -6,7 +6,8 @@ using namespace std;
 
 int main() {
 	Year year = 2021;
-	cout << year << endl;
+	Year yearComing = 2023;
+	cout << "2023 - 2021 = " << yearComing - year << endl;
 
 	Date today;
 	cout << today;

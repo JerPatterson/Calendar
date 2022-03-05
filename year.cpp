@@ -29,7 +29,22 @@ void Year::setNbOfDays() {
 	else nbOfDays_ = 365;
 }
 
-
 ostream& operator<<(ostream& o, const Year& year) {
 	return o << year.number_;
+}
+
+int operator+(int nbOfDays, const Year& year) {
+	return nbOfDays + year.nbOfDays_;
+}
+
+int Year::operator-(const Year& other) const {
+	int smallestYear = min<int>(number_, other.number_);
+
+	int nbOfDaysBetween = 0;
+	for (int i = 1; i < abs(number_ - other.number_); ++i) {
+		nbOfDaysBetween = nbOfDaysBetween + Year(smallestYear + i);
+	}
+
+	if (number_ < other.number_) return -1 * nbOfDaysBetween;
+	else  return nbOfDaysBetween;
 }
