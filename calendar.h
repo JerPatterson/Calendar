@@ -57,8 +57,8 @@ public:
 	friend int operator+(int, const Month&);
 	friend int operator-(int, const Month&);
 
-	bool operator<(const Month& month) const;
-	bool operator>(const Month& month) const;
+	bool operator<(const Month&) const;
+	bool operator>(const Month&) const;
 	int operator-(const Month&) const;
 	Month& operator+(int) const;
 
@@ -74,11 +74,20 @@ private:
 class Date {
 public:
 	Date() = default;
-	Date(int, Month, Year);
+	Date(int, Months, Year);
 
-	friend std::ostream& operator<<(std::ostream&, const Date&);
 	void dateAbreviation() const;
 	void americanDateAbreviation() const;
+
+	friend std::ostream& operator<<(std::ostream&, const Date&);
+	friend int operator+(int, const Date&);
+	friend int operator-(int, const Date&);
+	friend int operator-(const Month&, const Date&);
+
+	bool operator<(const Date&) const;
+	bool operator>(const Date&) const;
+	int operator-(const Date&) const;
+	Date& operator+(int) const;
 
 private:
 	int number_ = 4;

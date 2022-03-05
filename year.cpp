@@ -54,7 +54,7 @@ int Year::operator-(const Year& other) const {
 	}
 
 	if (number_ < other.number_) return -1 * nbOfDaysBetween;
-	else  return nbOfDaysBetween;
+	else return nbOfDaysBetween;
 }
 
 int operator-(int nbOfDays, const Year& year) {
