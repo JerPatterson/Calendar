@@ -1,13 +1,21 @@
+#include <iostream>
 #include <map>
 #include "calendar.h"
 
 using namespace std;
 
 
+static const int NUMBER_OF_MONTHS_IN_A_YEAR = 12;
+
 static const map<string, unsigned> MONTHS_IN_NUM =
 { {"January"s, 1}, {"Febuary"s, 2}, {"March"s, 3}, {"April"s, 4}, {"May"s, 5},
 	{"June"s, 6}, {"July"s, 7}, {"August"s, 8}, {"September"s, 9}, {"October"s, 10},
 	{"November"s, 11}, {"December"s, 12} };
+
+static const map<unsigned, string> MONTHS_IN_STRING =
+{ {1, "January"s}, {2, "Febuary"s}, {3, "March"s}, {4, "April"s}, {5, "May"s},
+	{6, "June"s}, {7, "July"s}, {8, "August"s}, {9, "September"s}, {10, "October"s},
+	{11, "November"s}, {12, "December"s} };
 
 
 Month::Month(const Months& month, int year) {
@@ -36,4 +44,64 @@ void Month::setNbOfDays() {
 
 		nbOfDays_ = nbOfDays[static_cast<int>(name_)];
 	}
+}
+
+int Month::getNumber() const {
+	return static_cast<int>(name_);
+}
+
+ostream& operator<<(ostream& o, const Month& month) {
+	return o << MONTHS_IN_STRING.at(static_cast<int>(month.name_));
+}
+
+bool Month::operator<(const Month& month) const {
+	if (year_ < month.year_) return true;
+	else if (year_ > month.year_) return false;
+	else if (static_cast<int>(name_) < static_cast<int>(month.name_)) return true;
+	else return false;
+}
+
+bool Month::operator>(const Month& month) const {
+	if (year_ > month.year_) return true;
+	else if (year_ < month.year_) return false;
+	else if (static_cast<int>(name_) > static_cast<int>(month.name_)) return true;
+	else return false;
+}
+
+int operator+(int nbOfDays, const Month& month) {
+	return nbOfDays + month.nbOfDays_;
+}
+
+int Month::operator-(const Month& other) const {
+	// Calculation of days from full year(s) between the two months:
+	int nbOfDaysBetween = year_ - other.year_;
+
+	// Sort the two month for the right calculation.
+	const Month *firstMonth, *secondMonth;
+	if (*this < other)
+		firstMonth = this, secondMonth = &other;
+	else if (*this > other)
+		firstMonth = &other, secondMonth = this;
+	else return nbOfDaysBetween; // Mean the two are equal
+
+	// If months are in the same year (cases):
+	if (year_.getNumber() == other.year_.getNumber()) {
+		for (int i = firstMonth->getNumber() + 1; i < firstMonth->getNumber() + secondMonth->getNumber(); ++i)
+			nbOfDaysBetween = nbOfDaysBetween + Month(Months(i), year_.getNumber());
+	}
+
+	// If months are in different years (two cases):
+	else {
+		for (int i = firstMonth->getNumber() + 1; i < NUMBER_OF_MONTHS_IN_A_YEAR; ++i)
+			nbOfDaysBetween = nbOfDaysBetween + Month(Months(i), firstMonth->year_.getNumber());
+		for (int i = 1; i < secondMonth->getNumber(); ++i)
+			nbOfDaysBetween = nbOfDaysBetween + Month(Months(i), secondMonth->year_.getNumber());
+	}
+
+	if (*this < other) return nbOfDaysBetween;
+	else if (*this > other) return -1 * nbOfDaysBetween;
+}
+
+int operator-(int nbOfDays, const Month& month) {
+	return nbOfDays - month.nbOfDays_;
 }

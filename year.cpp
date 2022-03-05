@@ -33,6 +33,14 @@ ostream& operator<<(ostream& o, const Year& year) {
 	return o << year.number_;
 }
 
+bool Year::operator<(const Year& other) const {
+	return number_ < other.number_;
+}
+
+bool Year::operator>(const Year& other) const {
+	return number_ > other.number_;
+}
+
 int operator+(int nbOfDays, const Year& year) {
 	return nbOfDays + year.nbOfDays_;
 }

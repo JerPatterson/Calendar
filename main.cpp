@@ -12,6 +12,10 @@ int main() {
 	Year newYear = yearComing + 366;
 	cout << "2025 + 366 = " << newYear << endl;
 
+	Month month = Month(Months::DECEMBER, 2002);
+	Month otherMonth = Month(Months::FEBUARY, 2003);
+	cout << "Dec. 2002 - Feb. 2003 = " << month - otherMonth << endl;
+
 	Date today;
 	cout << today;
 	today.americanDateAbreviation();
