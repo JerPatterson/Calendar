@@ -21,9 +21,10 @@ public:
 	Year() = default;
 	Year(int);
 
-	friend class Month;
-
 	friend std::ostream& operator<<(std::ostream&, const Year&);
+
+	bool getLeapStatus() const { return isLeap_; };
+	int getNbOfDays() const { return nbOfDays_; };
 
 private:
 	int number_ = 2022;
@@ -32,6 +33,22 @@ private:
 
 	void setNbOfDays();
 	void setLeapYearStatus();
+};
+
+class Date {
+public:
+	Date() = default;
+	Date(int, Months, Year);
+
+	friend std::ostream& operator<<(std::ostream&, const Date&);
+	void dateAbreviation() const;
+	void americanDateAbreviation() const;
+
+private:
+	int number_ = 4;
+	Year year_ = 2022;
+	Months month_ = Months::MARCH;
+	DaysOfWeek dayOfWeek_ = DaysOfWeek::FRIDAY;
 };
 
 
@@ -47,21 +64,4 @@ private:
 	int nbOfDays_ = 0;
 
 	void setNbOfDays();
-};
-
-
-class Date {
-public:
-	Date() = default;
-	Date(int, Months, int);
-
-	friend std::ostream& operator<<(std::ostream&, const Date&);
-	void dateAbreviation() const;
-	void americanDateAbreviation() const;
-
-private:
-	int number_ = 4;
-	Year year_;
-	Months month_ = Months::MARCH;
-	DaysOfWeek dayOfWeek_ = DaysOfWeek::FRIDAY;
 };

@@ -1,14 +1,15 @@
+#include <iostream>
 #include "calendar.h"
 
 using namespace std;
 
 
-Year::Year(int number) {
-	number_ = number;
+Year::Year(int number) :
+	number_(number)
+{
 	setLeapYearStatus();
 	setNbOfDays();
 }
-
 
 void Year::setLeapYearStatus() {
 	// A year is leap if it's divisable by 400

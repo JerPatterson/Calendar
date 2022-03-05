@@ -5,8 +5,10 @@ using namespace std;
 
 
 int main() {
-	Date today;
+	Year year = 2021;
+	cout << year << endl;
 
+	Date today;
 	cout << today;
 	today.americanDateAbreviation();
 	today.dateAbreviation();

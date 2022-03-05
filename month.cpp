@@ -25,7 +25,7 @@ Month::Month(const string& name, int year) {
 
 void Month::setNbOfDays() {
 	if (name_ == Months::FEBUARY) {
-		if (year_.isLeap_) nbOfDays_ = 29;
+		if (year_.getLeapStatus()) nbOfDays_ = 29;
 		else nbOfDays_ = 28;
 	}
 

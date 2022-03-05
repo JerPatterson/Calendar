@@ -15,9 +15,9 @@ static const map<unsigned, string> MONTHS_IN_STRING =
 	{11, "November"s}, {12, "December"s} };
 
 
-Date::Date(int number, Months month, int year) :
+Date::Date(int number, Months month, Year year) :
 	number_(number),
-	year_(Year(year)),
+	year_(year),
 	month_(month),
 	dayOfWeek_(DaysOfWeek::UNDEFINED) // For now... later call getDayOfWeek (TODO)
 {
