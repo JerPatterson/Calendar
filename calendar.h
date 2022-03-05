@@ -23,8 +23,10 @@ public:
 
 	friend std::ostream& operator<<(std::ostream&, const Year&);
 	friend int operator+(int, const Year&);
+	friend int operator-(int, const Year&);
 
 	int operator-(const Year&) const;
+	Year& operator+(int) const;
 
 	bool getLeapStatus() const { return isLeap_; };
 	int getNbOfDays() const { return nbOfDays_; };

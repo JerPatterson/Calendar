@@ -48,3 +48,17 @@ int Year::operator-(const Year& other) const {
 	if (number_ < other.number_) return -1 * nbOfDaysBetween;
 	else  return nbOfDaysBetween;
 }
+
+int operator-(int nbOfDays, const Year& year) {
+	return nbOfDays - year.nbOfDays_;
+}
+
+Year& Year::operator+(int nbOfDays) const {
+	int i = 0;
+	while (nbOfDays > 0) {
+		nbOfDays = nbOfDays - Year(number_ + ++i).getNbOfDays();
+	}
+
+	Year year = Year(number_ + i);
+	return year;
+}
