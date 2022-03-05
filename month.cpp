@@ -18,15 +18,24 @@ static const map<unsigned, string> MONTHS_IN_STRING =
 	{11, "November"s}, {12, "December"s} };
 
 
-Month::Month(const Months& month, int year) {
-	name_ = month;
-	year_ = Year(year);
+Month::Month(const Months& month, int year) :
+	name_(month),
+	year_(Year(year))
+{
 	setNbOfDays();
 }
 
-Month::Month(const string& name, int year) {
-	name_ = static_cast<Months>(MONTHS_IN_NUM.at(name));
-	year_ = Year(year);
+Month::Month(const Months& month, const Year& year) :
+	name_(month),
+	year_(year)
+{
+	setNbOfDays();
+}
+
+Month::Month(const string& name, int year) :
+	name_(static_cast<Months>(MONTHS_IN_NUM.at(name))),
+	year_(Year(year))
+{
 	setNbOfDays();
 }
 
@@ -104,4 +113,22 @@ int Month::operator-(const Month& other) const {
 
 int operator-(int nbOfDays, const Month& month) {
 	return nbOfDays - month.nbOfDays_;
+}
+
+Month& Month::operator+(int nbOfDays) const {
+	Year newYear = year_ + nbOfDays;
+	if (newYear > year_) nbOfDays = newYear - year_;
+
+	int i = static_cast<int>(name_);
+	Month newMonth = Month(Months(this->getNumber()), newYear);
+	while (nbOfDays > 0) {
+		if (i == 12) {
+			i = 0; newYear = Year(newYear.getNumber() + 1);
+		}
+
+		newMonth = Month(Months(++i), newYear);
+		nbOfDays = nbOfDays - newMonth;
+	}
+
+	return newMonth;
 }

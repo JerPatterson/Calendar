@@ -62,11 +62,17 @@ int operator-(int nbOfDays, const Year& year) {
 }
 
 Year& Year::operator+(int nbOfDays) const {
+	if (nbOfDays - Year(number_ + 1) < 0) {
+		Year newYear = Year(number_);
+
+		return newYear;
+	}
+
 	int i = 0;
 	while (nbOfDays > 0) {
 		nbOfDays = nbOfDays - Year(number_ + ++i).getNbOfDays();
 	}
 
-	Year year = Year(number_ + i);
-	return year;
+	Year newYear = Year(number_ + i);
+	return newYear;
 }

@@ -48,6 +48,7 @@ class Month {
 public:
 	Month() = default;
 	Month(const Months&, int);
+	Month(const Months&, const Year&);
 	Month(const std::string&, int);
 
 	int getNumber() const;
