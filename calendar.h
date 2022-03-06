@@ -98,4 +98,6 @@ private:
 	Year year_ = 2022;
 	Month month_ = Month(Months::MARCH, 2022);
 	DaysOfWeek dayOfWeek_ = DaysOfWeek::FRIDAY;
+
+	void setDayOfWeek();
 };
