@@ -4,6 +4,7 @@
 
 
 static const int NUMBER_OF_DAYS_IN_A_WEEK = 7;
+static const int NUMBER_OF_MONTHS_IN_A_YEAR = 12;
 static const int NUMBER_OF_DAYS_IN_A_YEAR = 365;
 
 
@@ -52,6 +53,8 @@ public:
 	Month(const std::string&, int);
 
 	int getNumber() const;
+	int getNbOfDays() const { return nbOfDays_; };
+	const Year& getYear() const { return year_; }; // TEMPORARY FIX
 
 	friend std::ostream& operator<<(std::ostream&, const Month&);
 	friend int operator+(int, const Month&);
@@ -75,6 +78,7 @@ class Date {
 public:
 	Date() = default;
 	Date(int, Months, Year);
+	Date(int, Month);
 
 	void dateAbreviation() const;
 	void americanDateAbreviation() const;

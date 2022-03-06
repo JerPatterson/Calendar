@@ -22,6 +22,8 @@ int main() {
 	Month march = Month(Months::MARCH, 2007);
 	Month newMonth = march + 300;
 	cout << "Mar. 2007 + 300 = " << newMonth << endl;
+	Month newMonth2 = march + 4;
+	cout << "Mar. 2007 +   4 = " << newMonth2 << endl;
 
 	Date today;
 	cout << today;
@@ -29,7 +31,11 @@ int main() {
 	today.dateAbreviation();
 
 	Date oldDate = Date(27, Months::DECEMBER, year);
-	cout << today - oldDate << "   " << oldDate - today;
+	cout << "4 Mar. 2022 - 27 Dec. 2021 = " << today - oldDate << endl;
+	cout << "27 Dec. 2021 - 4 Mar. 2022 = " << oldDate - today << endl;
+
+	cout << oldDate + 20 << endl;
+
 
 	return 0;
 }

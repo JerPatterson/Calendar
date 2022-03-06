@@ -14,15 +14,22 @@ Date::Date(int number, Months month, Year year) :
 	number_(number),
 	year_(year),
 	month_(Month(month, year)),
-	dayOfWeek_(DaysOfWeek::UNDEFINED) // For now... later call getDayOfWeek (TODO)
+	dayOfWeek_(DaysOfWeek::UNDEFINED) // TEMPORARY later call getDayOfWeek (TODO)
+{
+}
+
+Date::Date(int number, Month month) :
+	number_(number),
+	year_(month.getYear()), // TEMPORARY
+	month_(month),
+	dayOfWeek_(DaysOfWeek::FRIDAY) // TEMPORARY later call getDayOfWeek (TODO)
 {
 }
 
 
 ostream& operator<<(ostream& o, const Date& date) {
 	o << DAYS_OF_WEEK_IN_STRING.at(static_cast<int>(date.dayOfWeek_)) << ", ";
-	o << date.month_ << ' ';
-	o << date.number_ << ", " << date.year_ << endl;
+	o << date.month_ << ' ' << date.number_ << ", " << date.year_ << endl;
 
 	return o;
 }
@@ -48,9 +55,7 @@ void Date::americanDateAbreviation() const {
 }
 
 bool Date::operator<(const Date& date) const {
-	if (year_ < date.year_) return true;
-	else if (year_ > date.year_) return false;
-	else if (month_ < date.month_) return true;
+	if (month_ < date.month_) return true;
 	else if (month_ > date.month_) return false;
 	else if (number_ < date.number_) return true;
 	else return false;
@@ -89,7 +94,21 @@ int operator-(int nbOfDays, const Date& date) {
 	return nbOfDays - date.number_;
 }
 
-Date& Date::operator+(int) const {
-	Date date = Date();
-	return date;
+Date& Date::operator+(int nbOfDays) const {
+	Month newMonth = month_ + nbOfDays;
+	if (newMonth > month_) nbOfDays = newMonth - month_;
+
+	// Verify if the days to add make it so the month and possibly the year change:
+	if (number_ + nbOfDays > newMonth.getNbOfDays()) {
+		int number = (number_ + nbOfDays) - newMonth.getNbOfDays();
+		int year = newMonth.getYear().getNumber();
+		if (newMonth.getNumber() == NUMBER_OF_MONTHS_IN_A_YEAR) ++year;
+		Months month = Months(newMonth.getNumber() % NUMBER_OF_MONTHS_IN_A_YEAR + 1);
+
+		Date newDate = Date(number, Month(month, year));
+		return newDate;
+	}
+
+	Date newDate = Date(nbOfDays, newMonth);
+	return newDate;
 }

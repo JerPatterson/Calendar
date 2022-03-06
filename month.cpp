@@ -5,8 +5,6 @@
 using namespace std;
 
 
-static const int NUMBER_OF_MONTHS_IN_A_YEAR = 12;
-
 static const map<string, unsigned> MONTHS_IN_NUM =
 { {"January"s, 1}, {"Febuary"s, 2}, {"March"s, 3}, {"April"s, 4}, {"May"s, 5},
 	{"June"s, 6}, {"July"s, 7}, {"August"s, 8}, {"September"s, 9}, {"October"s, 10},
@@ -121,7 +119,7 @@ Month& Month::operator+(int nbOfDays) const {
 
 	int i = static_cast<int>(name_);
 	Month newMonth = Month(Months(this->getNumber()), newYear);
-	while (nbOfDays > 0) {
+	while (nbOfDays > newMonth.nbOfDays_) {
 		if (i == 12) {
 			i = 0; newYear = Year(newYear.getNumber() + 1);
 		}
