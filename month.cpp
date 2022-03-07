@@ -104,9 +104,9 @@ int Month::operator-(const Month& other) const {
 			nbOfDaysBetween = nbOfDaysBetween + Month(Months(i), year_.getNumber());
 	}
 
-	// If months are in different years (two cases):
+	// If months are in different years :
 	else {
-		for (int i = firstMonth->getNumber() + 1; i < NUMBER_OF_MONTHS_IN_A_YEAR; ++i)
+		for (int i = firstMonth->getNumber() + 1; i <= NUMBER_OF_MONTHS_IN_A_YEAR; ++i)
 			nbOfDaysBetween = nbOfDaysBetween + Month(Months(i), firstMonth->year_.getNumber());
 		for (int i = 1; i < secondMonth->getNumber(); ++i)
 			nbOfDaysBetween = nbOfDaysBetween + Month(Months(i), secondMonth->year_.getNumber());
@@ -122,12 +122,12 @@ int operator-(int nbOfDays, const Month& month) {
 
 Month& Month::operator+(int nbOfDays) const {
 	Year newYear = year_ + nbOfDays;
-	if (newYear > year_) nbOfDays = newYear - year_;
+	if (newYear > year_) nbOfDays -= newYear - year_;
 
 	int i = static_cast<int>(name_);
 	Month newMonth = Month(Months(this->getNumber()), newYear);
 	while (nbOfDays > newMonth.nbOfDays_) {
-		if (i == 12) {
+		if (i == NUMBER_OF_MONTHS_IN_A_YEAR) {
 			i = 0; newYear = Year(newYear.getNumber() + 1);
 		}
 

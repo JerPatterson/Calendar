@@ -125,14 +125,17 @@ Date& Date::operator+(int nbOfDays) const {
 	}
 
 	// Verify if the days to add make it so the month and possibly the year change:
-	if (nbOfDays > newMonth.getNbOfDays()) {
-		int number = nbOfDays - newMonth.getNbOfDays();
+	while (nbOfDays > newMonth.getNbOfDays()) {
+		nbOfDays -= newMonth.getNbOfDays();
+		int number = nbOfDays;
 		int year = newMonth.getYear().getNumber();
 		if (newMonth.getNumber() == NUMBER_OF_MONTHS_IN_A_YEAR) ++year;
-		Months month = Months(newMonth.getNumber() % NUMBER_OF_MONTHS_IN_A_YEAR + 1);
+		newMonth = Month(Months(newMonth.getNumber() % NUMBER_OF_MONTHS_IN_A_YEAR + 1), year);
 
-		Date newDate = Date(number, Month(month, year));
-		return newDate;
+		if (nbOfDays < newMonth.getNbOfDays()) {
+			Date newDate = Date(number, newMonth);
+			return newDate;
+		}
 	}
 
 	Date newDate = Date(nbOfDays, newMonth);

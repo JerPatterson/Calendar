@@ -42,7 +42,7 @@ int main() {
 	cout << "-----------------------------------------------------------" << endl;
 
 	month = makeMonth(12)(2002);
-	otherMonth = makeMonth(2)(2003);
+	otherMonth = makeMonth(1)(2004);
 	cout << month << " - " << otherMonth << " = " << month - otherMonth << endl;
 	cout << otherMonth << " - " << month << " = " << otherMonth - month << endl;
 	cout << "-----------------------------------------------------------" << endl;
@@ -68,8 +68,11 @@ int main() {
 
 	number = 35; date = otherDate + number;
 	cout << otherDate << " + " << number << " = " << date << endl;
-	number = 365; otherDate = date + number;
+	number = 335; otherDate = date + number;
 	cout << date << " + " << number << " = " << otherDate << endl;
+	number = 1000; otherDate = date + number;
+	cout << date << " + " << number << " = " << otherDate << endl;
+	cout << "-----------------------------------------------------------" << endl;
 
 	return 0;
 }
