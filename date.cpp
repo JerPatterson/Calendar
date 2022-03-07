@@ -20,6 +20,14 @@ Date::Date(int number, Months month, Year year) :
 	setDayOfWeek();
 }
 
+Date::Date(int number, int month, int year) :
+	number_(number),
+	year_(Year(year)),
+	month_(Month(month, year))
+{
+	setDayOfWeek();
+}
+
 Date::Date(int number, Month month) :
 	number_(number),
 	year_(month.getYear()), // TEMPORARY
@@ -40,7 +48,7 @@ void Date::setDayOfWeek() {
 
 ostream& operator<<(ostream& o, const Date& date) {
 	o << DAYS_OF_WEEK_IN_STRING.at(static_cast<int>(date.dayOfWeek_)) << ", ";
-	o << date.month_ << ' ' << date.number_ << ", " << date.year_ << endl;
+	o << date.month_ << ' ' << date.number_ << ", " << date.year_;
 
 	return o;
 }

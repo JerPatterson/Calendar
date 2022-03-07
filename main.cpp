@@ -1,41 +1,75 @@
 #include <iostream>
+#include <functional>
 #include "calendar.h"
 
 using namespace std;
 
 
+// Curryfication | To make a date :
+auto makeDate(int number) {
+	return [=](int month) {
+		return [=](int year) {
+			Date tempDate = Date(number, month, year);
+			return tempDate;
+		};
+	};
+}
+
+// Curryfication | To make a month :
+auto makeMonth(int month) {
+	return [=](int year) {
+		Month tempDate = Month(month, year);
+		return tempDate;
+	};
+}
+
+
 int main() {
-	Year year = 2021;
-	Year yearComing = 2025;
-	cout << "2025 - 2021 = " << yearComing - year << endl;
+	int number;
+	Year year, otherYear;
+	Month month, otherMonth;
+	Date today, date, otherDate;
 
-	Year result = yearComing + 366;
-	cout << "2025 + 366 = " << result << endl;
-	result = year + 300;
-	cout << "2021 + 300 = " << result << endl;
+	year = 2021; otherYear = 2025;
+	cout << otherYear << " - " << year << " = " << otherYear - year << endl;
+	cout << otherYear << " - " << year << " = " << otherYear - year << endl;
+	cout << "-----------------------------------------------------------" << endl;
 
-	Month month = Month(Months::DECEMBER, 2002);
-	Month otherMonth = Month(Months::FEBUARY, 2004);
-	cout << "Dec. 2002 - Feb. 2003 = " << month - otherMonth << endl;
-	cout << "Feb. 2003 - Dec. 2002 = " << otherMonth - month << endl;
+	number = 366; year = otherYear + number;
+	cout << otherYear << " + " << number << " = " << year << endl;
+	number = 300; year = year + 300;
+	cout << year << " + " << number << " = " << year << endl;
+	cout << "-----------------------------------------------------------" << endl;
 
-	Month march = Month(Months::MARCH, 2007);
-	Month newMonth = march + 300;
-	cout << "Mar. 2007 + 300 = " << newMonth << endl;
-	Month newMonth2 = march + 4;
-	cout << "Mar. 2007 +   4 = " << newMonth2 << endl;
+	month = makeMonth(12)(2002);
+	otherMonth = makeMonth(2)(2003);
+	cout << month << " - " << otherMonth << " = " << month - otherMonth << endl;
+	cout << otherMonth << " - " << month << " = " << otherMonth - month << endl;
+	cout << "-----------------------------------------------------------" << endl;
 
-	Date today;
-	cout << today;
+	month = makeMonth(3)(2007);
+	otherMonth = month + number;
+	cout << month << " + " << number << " = " << otherMonth << endl;
+	number = 4;  otherMonth = month + number;
+	cout << month << " + " << number << " = " << otherMonth << endl;
+	number = 365;  otherMonth = month + number;
+	cout << month << " + " << number << " = " << otherMonth << endl;
+	cout << "-----------------------------------------------------------" << endl;
+
+	cout << today << endl;
 	today.americanDateAbreviation();
 	today.dateAbreviation();
+	cout << "-----------------------------------------------------------" << endl;
 
-	Date oldDate = Date(27, Months::DECEMBER, year);
-	cout << "4 Mar. 2022 - 27 Dec. 2021 = " << today - oldDate << endl;
-	cout << "27 Dec. 2021 - 4 Mar. 2022 = " << oldDate - today << endl;
+	otherDate = makeDate(27)(12)(2021);
+	cout << today << " - " << otherDate << " = " << today - otherDate << endl;
+	cout << otherDate << " - " << today << " = " << otherDate - today << endl;
+	cout << "-----------------------------------------------------------" << endl;
 
-	cout << oldDate + 35 << endl;
-
+	number = 35; date = otherDate + number;
+	cout << otherDate << " + " << number << " = " << date << endl;
+	number = 365; otherDate = date + number;
+	cout << date << " + " << number << " = " << otherDate << endl;
 
 	return 0;
 }

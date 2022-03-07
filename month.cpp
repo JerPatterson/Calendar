@@ -23,6 +23,13 @@ Month::Month(const Months& month, int year) :
 	setNbOfDays();
 }
 
+Month::Month(int monthNumber, int year) :
+	name_(Months(monthNumber)),
+	year_(year)
+{
+	setNbOfDays();
+}
+
 Month::Month(const Months& month, const Year& year) :
 	name_(month),
 	year_(year)

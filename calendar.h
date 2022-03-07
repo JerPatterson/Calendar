@@ -2,7 +2,6 @@
 #include <map>
 #include <string>
 
-
 static const int NUMBER_OF_DAYS_IN_A_WEEK = 7;
 static const int NUMBER_OF_MONTHS_IN_A_YEAR = 12;
 static const int NUMBER_OF_DAYS_IN_A_YEAR = 365;
@@ -49,6 +48,7 @@ class Month {
 public:
 	Month() = default;
 	Month(const Months&, int);
+	Month(int, int);
 	Month(const Months&, const Year&);
 	Month(const std::string&, int);
 
@@ -78,6 +78,7 @@ class Date {
 public:
 	Date() = default;
 	Date(int, Months, Year);
+	Date(int number, int month, int year);
 	Date(int, Month);
 
 	void dateAbreviation() const;
