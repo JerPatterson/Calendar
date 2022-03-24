@@ -45,16 +45,25 @@ int operator+(int nbOfDays, const Year& year) {
 	return nbOfDays + year.nbOfDays_;
 }
 
-int Year::operator-(const Year& other) const {
-	int smallestYear = min<int>(number_, other.number_);
+const Year& Year::getSmallestYear(const Year& other) const {
+	return number_ < other.number_ ? *this : other;
+}
+
+int Year::getDaysBetween(const Year& other) const {
+	int smallestYear = this->getSmallestYear(other.number_).number_;
 
 	int nbOfDaysBetween = 0;
 	for (int i = 1; i < abs(number_ - other.number_); ++i) {
 		nbOfDaysBetween = nbOfDaysBetween + Year(smallestYear + i);
 	}
 
-	if (number_ < other.number_) return -1 * nbOfDaysBetween;
-	else return nbOfDaysBetween;
+	return nbOfDaysBetween;
+}
+
+int Year::operator-(const Year& other) const {
+	int nbOfDaysBetween = this->getDaysBetween(other);
+
+	return number_ < other.number_ ? -1 * nbOfDaysBetween : nbOfDaysBetween;
 }
 
 int operator-(int nbOfDays, const Year& year) {
