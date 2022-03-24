@@ -27,6 +27,9 @@ public:
 
 	bool operator<(const Year&) const;
 	bool operator>(const Year&) const;
+	bool operator!=(const Year& other) const;
+	bool operator==(const Year& other) const;
+
 	int operator-(const Year&) const;
 	Year& operator+(int) const;
 

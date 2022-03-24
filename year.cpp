@@ -33,6 +33,7 @@ ostream& operator<<(ostream& o, const Year& year) {
 	return o << year.number_;
 }
 
+
 bool Year::operator<(const Year& other) const {
 	return number_ < other.number_;
 }
@@ -41,12 +42,21 @@ bool Year::operator>(const Year& other) const {
 	return number_ > other.number_;
 }
 
+bool Year::operator!=(const Year& other) const {
+	return number_ != other.number_;
+}
+
+bool Year::operator==(const Year& other) const {
+	return number_ == other.number_;
+}
+
+
 int operator+(int nbOfDays, const Year& year) {
 	return nbOfDays + year.nbOfDays_;
 }
 
 int Year::getSmallestYearNb(const Year& other) const {
-	if (number_ == other.number_)
+	if (*this == other)
 		throw invalid_argument("Both years are the same.");
 
 	return number_ < other.number_ ? number_ : other.number_;
@@ -55,7 +65,7 @@ int Year::getSmallestYearNb(const Year& other) const {
 int Year::getDaysBetween(const Year& other) const {
 	int nbOfDaysBetween = 0;
 
-	if (number_ != other.number_) {
+	if (*this != other) {
 		int smallestYear = this->getSmallestYearNb(other.number_);
 
 		for (int i = 1; i < abs(number_ - other.number_); ++i) {
