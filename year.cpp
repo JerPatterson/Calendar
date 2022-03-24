@@ -53,11 +53,14 @@ int Year::getSmallestYearNb(const Year& other) const {
 }
 
 int Year::getDaysBetween(const Year& other) const {
-	int smallestYear = this->getSmallestYearNb(other.number_);
-
 	int nbOfDaysBetween = 0;
-	for (int i = 1; i < abs(number_ - other.number_); ++i) {
-		nbOfDaysBetween = nbOfDaysBetween + Year(smallestYear + i);
+
+	if (number_ != other.number_) {
+		int smallestYear = this->getSmallestYearNb(other.number_);
+
+		for (int i = 1; i < abs(number_ - other.number_); ++i) {
+			nbOfDaysBetween = nbOfDaysBetween + Year(smallestYear + i);
+		}
 	}
 
 	return nbOfDaysBetween;
@@ -82,7 +85,7 @@ Year& Year::operator+(int nbOfDays) const {
 
 	int i = 0;
 	while (nbOfDays > 0) {
-		nbOfDays = nbOfDays - Year(number_ + ++i).getNbOfDays();
+		nbOfDays = nbOfDays - Year(number_ + ++i);
 	}
 
 	Year newYear = Year(number_ + i);
