@@ -86,9 +86,16 @@ int operator+(int nbOfDays, const Month& month) {
 	return nbOfDays + month.nbOfDays_;
 }
 
+int Month::numberOfDaysYearBetween(const Month& other) const {
+	return abs(year_ - other.year_);
+}
+
+bool Month::isInTheSameYear(const Month& other) const {
+	return year_.getNumber() == other.year_.getNumber();
+}
+
 int Month::operator-(const Month& other) const {
-	// Calculation of days from full year(s) between the two months:
-	int nbOfDaysBetween = abs(year_ - other.year_);
+	int nbOfDaysBetween = this->numberOfDaysYearBetween(other);
 
 	// Sort the two month for the right calculation.
 	const Month *firstMonth, *secondMonth;
@@ -99,7 +106,7 @@ int Month::operator-(const Month& other) const {
 	else return nbOfDaysBetween; // Mean the two are equal
 
 	// If months are in the same year (cases):
-	if (year_.getNumber() == other.year_.getNumber()) {
+	if (isInTheSameYear(other)) {
 		for (int i = firstMonth->getNumber() + 1; i < firstMonth->getNumber() + secondMonth->getNumber(); ++i)
 			nbOfDaysBetween = nbOfDaysBetween + Month(Months(i), year_.getNumber());
 	}

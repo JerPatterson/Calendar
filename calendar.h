@@ -71,6 +71,9 @@ private:
 	int nbOfDays_ = 0;
 
 	void setNbOfDays();
+
+	int numberOfDaysYearBetween(const Month& other) const;
+	bool isInTheSameYear(const Month& other) const;
 };
 
 
