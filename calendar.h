@@ -43,7 +43,7 @@ private:
 	void setLeapYearStatus();
 
 	int getDaysBetween(const Year& other) const;
-	const Year& getSmallestYear(const Year& other) const;
+	int getSmallestYearNb(const Year& other) const;
 };
 
 

@@ -45,12 +45,15 @@ int operator+(int nbOfDays, const Year& year) {
 	return nbOfDays + year.nbOfDays_;
 }
 
-const Year& Year::getSmallestYear(const Year& other) const {
-	return number_ < other.number_ ? *this : other;
+int Year::getSmallestYearNb(const Year& other) const {
+	if (number_ < other.number_)
+		throw invalid_argument("Both years are the same.");
+
+	return number_ < other.number_ ? number_ : other.number_;
 }
 
 int Year::getDaysBetween(const Year& other) const {
-	int smallestYear = this->getSmallestYear(other.number_).number_;
+	int smallestYear = this->getSmallestYearNb(other.number_);
 
 	int nbOfDaysBetween = 0;
 	for (int i = 1; i < abs(number_ - other.number_); ++i) {
