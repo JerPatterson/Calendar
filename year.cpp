@@ -46,7 +46,7 @@ int operator+(int nbOfDays, const Year& year) {
 }
 
 int Year::getSmallestYearNb(const Year& other) const {
-	if (number_ < other.number_)
+	if (number_ == other.number_)
 		throw invalid_argument("Both years are the same.");
 
 	return number_ < other.number_ ? number_ : other.number_;
