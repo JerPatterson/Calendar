@@ -87,17 +87,20 @@ int operator-(int nbOfDays, const Year& year) {
 }
 
 Year& Year::operator+(int nbOfDays) const {
-	if (nbOfDays - Year(number_ + 1) < 0) {
-		Year newYear = Year(number_);
+	nbOfDays = nbOfDays - this->nbOfDays_;
 
+	if (nbOfDays < 0) {
+		Year newYear = *this;
 		return newYear;
 	}
 
-	int i = 0;
-	while (nbOfDays > 0) {
-		nbOfDays = nbOfDays - Year(number_ + ++i);
-	}
+	else {
+		int i = 0;
+		while (nbOfDays > Year(number_ + ++i).nbOfDays_) {
+			nbOfDays = nbOfDays - Year(number_ + i);
+		}
 
-	Year newYear = Year(number_ + i);
-	return newYear;
+		Year newYear = Year(number_ + i);
+		return newYear;
+	}
 }
