@@ -117,6 +117,8 @@ int Month::operator-(const Month& other) const {
 			nbOfDaysBetween = nbOfDaysBetween + Month(Months(i), firstMonth->year_.getNumber());
 		for (int i = 1; i < secondMonth->getNumber(); ++i)
 			nbOfDaysBetween = nbOfDaysBetween + Month(Months(i), secondMonth->year_.getNumber());
+
+		nbOfDaysBetween = secondMonth->year_ - firstMonth->year_;
 	}
 
 	if (*this < other) return -1 * nbOfDaysBetween;
@@ -128,19 +130,32 @@ int operator-(int nbOfDays, const Month& month) {
 }
 
 Month& Month::operator+(int nbOfDays) const {
-	Year newYear = year_ + nbOfDays;
-	if (newYear > year_) nbOfDays -= newYear - year_;
+	// Substract number of days in the current month
+	nbOfDays = nbOfDays - this->nbOfDays_;
 
-	int i = static_cast<int>(name_);
-	Month newMonth = Month(Months(this->getNumber()), newYear);
-	while (nbOfDays > newMonth.nbOfDays_) {
-		if (i == NUMBER_OF_MONTHS_IN_A_YEAR) {
-			i = 0; newYear = Year(newYear.getNumber() + 1);
-		}
-
-		newMonth = Month(Months(++i), newYear);
-		nbOfDays = nbOfDays - newMonth;
+	if (nbOfDays < 0) {
+		Month newMonth = *this;
+		return newMonth;
 	}
 
-	return newMonth;
+	else {
+		// Substract number of days left in the current year
+		nbOfDays = nbOfDays - Month(Months(NUMBER_OF_MONTHS_IN_A_YEAR), this->getYear());
+
+		// Find the new month and year
+		int i = static_cast<int>(name_);
+		Year newYear = this->getYear();
+		Month newMonth = Month(Months(this->getNumber()), newYear);
+		while (nbOfDays > newMonth.nbOfDays_) {
+			if (i == NUMBER_OF_MONTHS_IN_A_YEAR) {
+				newYear = Year(newYear.getNumber() + 1);
+				i = 0;
+			}
+
+			newMonth = Month(Months(++i), newYear);
+			nbOfDays = nbOfDays - newMonth;
+		}
+
+		return newMonth;
+	}
 }

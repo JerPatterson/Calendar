@@ -55,6 +55,19 @@ int operator+(int nbOfDays, const Year& year) {
 	return nbOfDays + year.nbOfDays_;
 }
 
+int operator+=(int nbOfDays, const Year& year) {
+	return nbOfDays + year.nbOfDays_;
+}
+
+int operator-(int nbOfDays, const Year& year) {
+	return nbOfDays - year.nbOfDays_;
+}
+
+int operator-=(int nbOfDays, const Year& year) {
+	return nbOfDays - year.nbOfDays_;
+}
+
+
 int Year::getSmallestYearNb(const Year& other) const {
 	if (*this == other)
 		throw invalid_argument("Both years are the same.");
@@ -82,12 +95,8 @@ int Year::operator-(const Year& other) const {
 	return number_ < other.number_ ? -1 * nbOfDaysBetween : nbOfDaysBetween;
 }
 
-int operator-(int nbOfDays, const Year& year) {
-	return nbOfDays - year.nbOfDays_;
-}
-
 Year& Year::operator+(int nbOfDays) const {
-	nbOfDays = nbOfDays - this->nbOfDays_;
+	nbOfDays = nbOfDays - *this;
 
 	if (nbOfDays < 0) {
 		Year newYear = *this;

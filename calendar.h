@@ -23,7 +23,9 @@ public:
 
 	friend std::ostream& operator<<(std::ostream&, const Year&);
 	friend int operator+(int, const Year&);
+	friend int operator+=(int, const Year&);
 	friend int operator-(int, const Year&);
+	friend int operator-=(int, const Year&);
 
 	bool operator<(const Year&) const;
 	bool operator>(const Year&) const;
