@@ -66,7 +66,9 @@ public:
 
 	friend std::ostream& operator<<(std::ostream&, const Month&);
 	friend int operator+(int, const Month&);
+	friend int operator+=(int, const Month&);
 	friend int operator-(int, const Month&);
+	friend int operator-=(int, const Month&);
 
 	bool operator<(const Month&) const;
 	bool operator>(const Month&) const;

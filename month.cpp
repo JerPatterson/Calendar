@@ -64,6 +64,7 @@ int Month::getNumber() const {
 	return static_cast<int>(name_);
 }
 
+
 ostream& operator<<(ostream& o, const Month& month) {
 	return o << MONTHS_IN_STRING.at(static_cast<int>(month.name_));
 }
@@ -82,9 +83,23 @@ bool Month::operator>(const Month& month) const {
 	else return false;
 }
 
+
 int operator+(int nbOfDays, const Month& month) {
 	return nbOfDays + month.nbOfDays_;
 }
+
+int operator+=(int nbOfDays, const Month& month) {
+	return nbOfDays + month.nbOfDays_;
+}
+
+int operator-(int nbOfDays, const Month& month) {
+	return nbOfDays - month.nbOfDays_;
+}
+
+int operator-=(int nbOfDays, const Month& month) {
+	return nbOfDays - month.nbOfDays_;
+}
+
 
 int Month::numberOfDaysYearBetween(const Month& other) const {
 	return abs(year_ - other.year_);
@@ -125,9 +140,6 @@ int Month::operator-(const Month& other) const {
 	else if (*this > other) return nbOfDaysBetween;
 }
 
-int operator-(int nbOfDays, const Month& month) {
-	return nbOfDays - month.nbOfDays_;
-}
 
 Month& Month::operator+(int nbOfDays) const {
 	// Substract number of days in the current month
