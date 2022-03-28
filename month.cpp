@@ -88,16 +88,16 @@ int operator+(int nbOfDays, const Month& month) {
 	return nbOfDays + month.nbOfDays_;
 }
 
-int operator+=(int nbOfDays, const Month& month) {
-	return nbOfDays + month.nbOfDays_;
+void operator+=(int& nbOfDays, const Month& month) {
+	nbOfDays = nbOfDays + month.nbOfDays_;
 }
 
 int operator-(int nbOfDays, const Month& month) {
 	return nbOfDays - month.nbOfDays_;
 }
 
-int operator-=(int nbOfDays, const Month& month) {
-	return nbOfDays - month.nbOfDays_;
+void operator-=(int& nbOfDays, const Month& month) {
+	nbOfDays = nbOfDays - month.nbOfDays_;
 }
 
 
@@ -120,20 +120,20 @@ int Month::operator-(const Month& other) const {
 		firstMonth = &other, secondMonth = this;
 	else return nbOfDaysBetween; // Mean the two are equal
 
-	// If months are in the same year (cases):
+	// If months are in the same year:
 	if (isInTheSameYear(other)) {
-		for (int i = firstMonth->getNumber() + 1; i < firstMonth->getNumber() + secondMonth->getNumber(); ++i)
-			nbOfDaysBetween = nbOfDaysBetween + Month(Months(i), year_.getNumber());
+		for (int i = firstMonth->getNumber() + 1; i < secondMonth->getNumber(); ++i)
+			nbOfDaysBetween += Month(Months(i), year_.getNumber());
 	}
 
 	// If months are in different years :
 	else {
-		for (int i = firstMonth->getNumber() + 1; i <= NUMBER_OF_MONTHS_IN_A_YEAR; ++i)
-			nbOfDaysBetween = nbOfDaysBetween + Month(Months(i), firstMonth->year_.getNumber());
-		for (int i = 1; i < secondMonth->getNumber(); ++i)
-			nbOfDaysBetween = nbOfDaysBetween + Month(Months(i), secondMonth->year_.getNumber());
-
 		nbOfDaysBetween = secondMonth->year_ - firstMonth->year_;
+
+		for (int i = firstMonth->getNumber() + 1; i <= NUMBER_OF_MONTHS_IN_A_YEAR; ++i)
+			nbOfDaysBetween += Month(Months(i), firstMonth->year_.getNumber());
+		for (int i = 1; i < secondMonth->getNumber(); ++i)
+			nbOfDaysBetween += Month(Months(i), secondMonth->year_.getNumber());
 	}
 
 	if (*this < other) return -1 * nbOfDaysBetween;
@@ -143,7 +143,7 @@ int Month::operator-(const Month& other) const {
 
 Month& Month::operator+(int nbOfDays) const {
 	// Substract number of days in the current month
-	nbOfDays = nbOfDays - this->nbOfDays_;
+	nbOfDays -= *this;
 
 	if (nbOfDays < 0) {
 		Month newMonth = *this;
@@ -151,21 +151,18 @@ Month& Month::operator+(int nbOfDays) const {
 	}
 
 	else {
-		// Substract number of days left in the current year
-		nbOfDays = nbOfDays - Month(Months(NUMBER_OF_MONTHS_IN_A_YEAR), this->getYear());
-
 		// Find the new month and year
 		int i = static_cast<int>(name_);
 		Year newYear = this->getYear();
-		Month newMonth = Month(Months(this->getNumber()), newYear);
+		Month newMonth = Month(Months(i), newYear);
 		while (nbOfDays > newMonth.nbOfDays_) {
 			if (i == NUMBER_OF_MONTHS_IN_A_YEAR) {
 				newYear = Year(newYear.getNumber() + 1);
-				i = 0;
+				i = 0; // Reset to Jan.
 			}
 
 			newMonth = Month(Months(++i), newYear);
-			nbOfDays = nbOfDays - newMonth;
+			nbOfDays -= newMonth;
 		}
 
 		return newMonth;

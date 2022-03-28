@@ -55,16 +55,16 @@ int operator+(int nbOfDays, const Year& year) {
 	return nbOfDays + year.nbOfDays_;
 }
 
-int operator+=(int nbOfDays, const Year& year) {
-	return nbOfDays + year.nbOfDays_;
+void operator+=(int& nbOfDays, const Year& year) {
+	nbOfDays = nbOfDays + year.nbOfDays_;
 }
 
 int operator-(int nbOfDays, const Year& year) {
 	return nbOfDays - year.nbOfDays_;
 }
 
-int operator-=(int nbOfDays, const Year& year) {
-	return nbOfDays - year.nbOfDays_;
+void operator-=(int& nbOfDays, const Year& year) {
+	nbOfDays = nbOfDays - year.nbOfDays_;
 }
 
 
