@@ -103,7 +103,8 @@ int Date::operator-(const Date& other) const {
 		firstDate = &other, secondDate = this;
 	else return 0; // Mean the two are equal
 
-	int nbOfDaysBetween = abs(firstDate->month_ - secondDate->month_) + *secondDate + (firstDate->month_ - *firstDate);
+	int nbOfDaysBetween = abs(firstDate->month_ - secondDate->month_);
+	nbOfDaysBetween += (firstDate->month_ - *firstDate) + *secondDate;
 
 	if (*this < other) return -1 * nbOfDaysBetween;
 	else if (*this > other) return nbOfDaysBetween;
@@ -126,12 +127,14 @@ Date& Date::operator+(int nbOfDays) const {
 
 	// Verify if the days to add make it so the month and possibly the year change:
 	while (nbOfDays > newMonth.getNbOfDays()) {
-		nbOfDays -= newMonth.getNbOfDays();
-		int number = nbOfDays;
 		int year = newMonth.getYear().getNumber();
-		if (newMonth.getNumber() == NUMBER_OF_MONTHS_IN_A_YEAR) ++year;
-		newMonth = Month(Months(newMonth.getNumber() % NUMBER_OF_MONTHS_IN_A_YEAR + 1), year);
+		if (newMonth.getNumber() == NUMBER_OF_MONTHS_IN_A_YEAR) 
+			++year;
 
+		newMonth = Month(Months(newMonth.getNumber() % NUMBER_OF_MONTHS_IN_A_YEAR + 1), year);
+		nbOfDays -= newMonth;
+
+		int number = nbOfDays;
 		if (nbOfDays < newMonth.getNbOfDays()) {
 			Date newDate = Date(number, newMonth);
 			return newDate;

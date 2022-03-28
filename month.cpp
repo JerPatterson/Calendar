@@ -155,7 +155,7 @@ Month& Month::operator+(int nbOfDays) const {
 		int i = static_cast<int>(name_);
 		Year newYear = this->getYear();
 		Month newMonth = Month(Months(i), newYear);
-		while (nbOfDays > newMonth.nbOfDays_) {
+		while (nbOfDays > 0) {
 			if (i == NUMBER_OF_MONTHS_IN_A_YEAR) {
 				newYear = Year(newYear.getNumber() + 1);
 				i = 0; // Reset to Jan.
